@@ -5,6 +5,12 @@ VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "pathway_cad", "src\pathway_cad.njsproj", "{57727E08-AE5F-40DF-A3CD-66DE63FEB7E5}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "framework", "framework", "{922A95EC-B5D6-4F01-B130-B6EAF0B832A4}"
+EndProject
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "Linq.ts", "..\LINQ\LINQ.ts\Linq.ts.njsproj", "{E0AEC189-6D05-47E4-9F69-DAFE43AC8398}"
+EndProject
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "biocad_webcore", "..\biocad_webcore\src\biocad_webcore.njsproj", "{A35EC934-2E6D-4153-AE23-1B39B47C1ADA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,9 +21,21 @@ Global
 		{57727E08-AE5F-40DF-A3CD-66DE63FEB7E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57727E08-AE5F-40DF-A3CD-66DE63FEB7E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57727E08-AE5F-40DF-A3CD-66DE63FEB7E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0AEC189-6D05-47E4-9F69-DAFE43AC8398}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0AEC189-6D05-47E4-9F69-DAFE43AC8398}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0AEC189-6D05-47E4-9F69-DAFE43AC8398}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0AEC189-6D05-47E4-9F69-DAFE43AC8398}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A35EC934-2E6D-4153-AE23-1B39B47C1ADA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A35EC934-2E6D-4153-AE23-1B39B47C1ADA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A35EC934-2E6D-4153-AE23-1B39B47C1ADA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A35EC934-2E6D-4153-AE23-1B39B47C1ADA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E0AEC189-6D05-47E4-9F69-DAFE43AC8398} = {922A95EC-B5D6-4F01-B130-B6EAF0B832A4}
+		{A35EC934-2E6D-4153-AE23-1B39B47C1ADA} = {922A95EC-B5D6-4F01-B130-B6EAF0B832A4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DC9268EE-14CA-4967-8C90-5390F38C1342}
