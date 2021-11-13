@@ -1,10 +1,12 @@
 <script src="../../build/linq.js"></script>
 <script src="../../build/biocad_webcore.js"></script>
+<script src="../../build/Metabolic_pathway.js"></script>
 
 <script>
 var file = "https://cdn.biodeep.cn/assets/ko00001.json";
 
 $ts.get(file, function(obj) {
 	console.log(obj);
+	console.log(PathwayNavigator.parseJsTree(obj));
 });
 </script>
