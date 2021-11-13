@@ -37,11 +37,18 @@
   <ItemGroup>
     <Folder Include="Canvas\" />
     <Folder Include="Models\" />
+    <Folder Include="Explorer\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="app.ts" />
     <TypeScriptCompile Include="Canvas\Cola_graph.ts" />
     <TypeScriptCompile Include="Canvas\Metabolic_pathway.ts" />
+    <TypeScriptCompile Include="Explorer\PathwayNavigator.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Explorer\jstree.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="Models\models.ts" />
     <TypeScriptCompile Include="Models\parseDunnart.ts" />
   </ItemGroup>
