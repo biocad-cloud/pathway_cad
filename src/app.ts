@@ -1,5 +1,6 @@
 /// <reference path="../../build/linq.d.ts" />
 /// <reference path="../../layer.d.ts" />
+/// <reference path="../../build/biocad_webcore.d.ts" />
 
 namespace biodeep.app {
 
