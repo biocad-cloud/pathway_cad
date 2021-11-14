@@ -30,7 +30,7 @@ namespace apps {
 
             $(`#${target}`).jstree({
                 'core': {
-                    data: [tree]
+                    data: tree.children
                 }
             });
         }
