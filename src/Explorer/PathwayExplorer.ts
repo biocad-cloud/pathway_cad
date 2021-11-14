@@ -7,6 +7,7 @@ namespace apps {
         };
 
         readonly assemblyKey: string = "ko00001-assembly";
+        readonly canvas: Metabolic_pathway = new Metabolic_pathway();
 
         protected init(): void {
             const dataUrl: string = <any>$ts("@data:repository");
@@ -22,6 +23,8 @@ namespace apps {
             } else {
                 vm.loadCache()
             }
+
+            vm.canvas.init();
         }
 
         private loadUITree(obj: KEGG.brite.IKEGGBrite) {

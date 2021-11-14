@@ -1,10 +1,6 @@
 namespace apps {
 
-    export class Metabolic_pathway extends Bootstrap {
-
-        public get appName(): string {
-            return "Pathway_explorer";
-        }
+    export class Metabolic_pathway {
 
         private width: number = 800;
         private height: number = 520;
@@ -17,8 +13,6 @@ namespace apps {
         private vis;
 
         public constructor() {
-            super();
-
             this.width = parseFloat(<string><any>$ts("@width"));
             this.height = parseFloat(<string><any>$ts("@height"));
         }
@@ -31,7 +25,7 @@ namespace apps {
             saveSvgAsPng(<any>$ts("#canvas").childNodes.item(0), "pathway.png");
         }
 
-        protected init(): void {
+        public init(): Metabolic_pathway {
             let graph_url: string = <any>$ts("@url:graph");
 
             this.d3cola = cola.d3adaptor(d3)
@@ -61,7 +55,9 @@ namespace apps {
                 $ts.getText(graph_url, json => this.d3cola.on("tick", this.loadGraph(JSON.parse(json)).tick()))
             }
 
-            console.log("intialization job done!");
+            TypeScript.logging.log("intialization job done!", TypeScript.ConsoleColors.DarkBlue);
+
+            return this;
         }
 
         /**

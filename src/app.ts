@@ -5,7 +5,6 @@
 namespace biodeep.app {
 
     export function start() {
-        Router.AddAppHandler(new apps.Metabolic_pathway());
         Router.AddAppHandler(new apps.PathwayExplorer());
 
         Router.RunApp();
