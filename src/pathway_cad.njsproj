@@ -49,6 +49,9 @@
     <TypeScriptCompile Include="Explorer\jstree.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="Explorer\PathwayExplorer.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="Models\models.ts" />
     <TypeScriptCompile Include="Models\parseDunnart.ts" />
   </ItemGroup>
