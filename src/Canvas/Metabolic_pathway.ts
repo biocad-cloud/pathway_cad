@@ -3,7 +3,7 @@ namespace apps {
     export class Metabolic_pathway extends Bootstrap {
 
         public get appName(): string {
-            return "Metabolic_pathway";
+            return "Pathway_explorer";
         }
 
         private width: number = 800;
@@ -32,7 +32,7 @@ namespace apps {
         }
 
         protected init(): void {
-            let graph_url: string = <any>$ts("@graph");
+            let graph_url: string = <any>$ts("@url:graph");
 
             this.d3cola = cola.d3adaptor(d3)
                 .linkDistance(60)
