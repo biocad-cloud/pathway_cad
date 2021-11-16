@@ -34,8 +34,29 @@ namespace apps {
             $(`#${target}`).jstree({
                 'core': {
                     data: tree.children
+                },
+                'plugins': ["contextmenu"],
+                'contextmenu': {
+                    'items': {
+                        "add_reactor": {
+                            label: "Add Reactor",
+                            action: PathwayExplorer.addReactor
+                        }
+                    }
                 }
             });
+        }
+
+        private static addReactor(data) {
+            const id: string = data.reference[0].id;
+            const kid = id.match(/K\d{4,}/g)
+
+            if (kid.length > 0) {
+                // K00000
+
+            } else {
+                // do nothing?
+            }
         }
 
         private saveCache(obj: KEGG.brite.IKEGGBrite) {
