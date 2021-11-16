@@ -23,12 +23,7 @@ namespace apps {
 
         public init() {
             this.graph.objectify();
-        }
-       
 
-       
-
-        window.main = (function () {
             /* create the SVG
             */
             var container, library, svg, toolbar;
@@ -154,9 +149,9 @@ namespace apps {
                 }
                 return global.tool = new_tool;
             });
-        });
+        }
 
-        update = function () {
+        update() {
             /* update the layout
             */
             var links, new_nodes, nodes;
@@ -214,7 +209,7 @@ namespace apps {
             return nodes.exit().remove();
         };
 
-        drag_add_link = function (selection) {
+        drag_add_link(selection) {
             return selection.on('mousedown.add_link', (function (d) {
                 var p;
                 global.new_link_source = d;
@@ -234,7 +229,5 @@ namespace apps {
             }));
         };
 
-    }).call(this);
-
-}
+    }
 }
