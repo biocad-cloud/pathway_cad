@@ -138,11 +138,10 @@ namespace apps {
             vm.vis.on('mousemove.add_link', (function (d) {
                 /* check if there is a new link in creation
                 */
-                var p;
                 if (vm.new_link_source != null) {
                     /* update the draggable link representation
                     */
-                    p = d3.mouse(vm.vis.node());
+                    const p = d3.mouse(vm.vis.node());
                     return vm.drag_link.attr('x1', vm.new_link_source.x).attr('y1', vm.new_link_source.y).attr('x2', p[0]).attr('y2', p[1]);
                 }
             })).on('mouseup.add_link', (function (d) {
@@ -257,21 +256,20 @@ namespace apps {
             const graph = this.graph;
 
             return selection.on('mousedown.add_link', (function (d) {
-                var p;
+
                 vm.new_link_source = d;
-                /* create the draggable link representation
-                */
-                p = d3.mouse(vm.vis.node());
+                // create the draggable link representation
+
+                const p = d3.mouse(vm.vis.node());
                 vm.drag_link = vm.vis.insert('line', '.node').attr('class', 'drag_link').attr('x1', d.x).attr('y1', d.y).attr('x2', p[0]).attr('y2', p[1]);
-                /* prevent pan activation
-                */
+                // prevent pan activation
                 d3.event.stopPropagation();
-                /* prevent text selection
-                */
+                // prevent text selection
                 return d3.event.preventDefault();
             })).on('mouseup.add_link', (function (d) {
-      /* add link and update, but only if a link is actually added
-      */      if (graph.add_link(vm.new_link_source, d) != null) return vm.update();
+                // add link and update, but only if a link is actually added
+                if (graph.add_link(vm.new_link_source, d) != null)
+                    return vm.update();
             }));
         };
 
