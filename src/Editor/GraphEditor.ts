@@ -9,7 +9,7 @@ namespace apps {
          * SELECTION - store the selected node
          * EDITING - store the drag mode (either 'drag' or 'add_link')
         */
-        global = {
+        readonly global = {
             /**
              * SELECTION - store the selected node
             */
@@ -19,211 +19,14 @@ namespace apps {
         /* create some fake data
         */
 
-        graph = {
-            nodes: [
-                {
-                    id: 'A',
-                    x: 469,
-                    y: 410,
-                    type: 'X'
-                }, {
-                    id: 'B',
-                    x: 493,
-                    y: 364,
-                    type: 'X'
-                }, {
-                    id: 'C',
-                    x: 442,
-                    y: 365,
-                    type: 'X'
-                }, {
-                    id: 'D',
-                    x: 467,
-                    y: 314,
-                    type: 'X'
-                }, {
-                    id: 'E',
-                    x: 477,
-                    y: 248,
-                    type: 'Y'
-                }, {
-                    id: 'F',
-                    x: 425,
-                    y: 207,
-                    type: 'Y'
-                }, {
-                    id: 'G',
-                    x: 402,
-                    y: 155,
-                    type: 'Y'
-                }, {
-                    id: 'H',
-                    x: 369,
-                    y: 196,
-                    type: 'Y'
-                }, {
-                    id: 'I',
-                    x: 350,
-                    y: 148,
-                    type: 'Z'
-                }, {
-                    id: 'J',
-                    x: 539,
-                    y: 222,
-                    type: 'Z'
-                }, {
-                    id: 'K',
-                    x: 594,
-                    y: 235,
-                    type: 'Z'
-                }, {
-                    id: 'L',
-                    x: 582,
-                    y: 185,
-                    type: 'Z'
-                }, {
-                    id: 'M',
-                    x: 633,
-                    y: 200,
-                    type: 'Z'
-                }
-            ],
-            links: [
-                {
-                    source: 'A',
-                    target: 'B'
-                }, {
-                    source: 'B',
-                    target: 'C'
-                }, {
-                    source: 'C',
-                    target: 'A'
-                }, {
-                    source: 'B',
-                    target: 'D'
-                }, {
-                    source: 'D',
-                    target: 'C'
-                }, {
-                    source: 'D',
-                    target: 'E'
-                }, {
-                    source: 'E',
-                    target: 'F'
-                }, {
-                    source: 'F',
-                    target: 'G'
-                }, {
-                    source: 'F',
-                    target: 'H'
-                }, {
-                    source: 'G',
-                    target: 'H'
-                }, {
-                    source: 'G',
-                    target: 'I'
-                }, {
-                    source: 'H',
-                    target: 'I'
-                }, {
-                    source: 'J',
-                    target: 'E'
-                }, {
-                    source: 'J',
-                    target: 'L'
-                }, {
-                    source: 'J',
-                    target: 'K'
-                }, {
-                    source: 'K',
-                    target: 'L'
-                }, {
-                    source: 'L',
-                    target: 'M'
-                }, {
-                    source: 'M',
-                    target: 'K'
-                }
-            ],
-            objectify: (function () {
-                /* resolve node IDs (not optimized at all!)
-                */
-                var l, n, _i, _len, _ref, _results;
-                _ref = graph.links;
-                _results = [];
-                for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-                    l = _ref[_i];
-                    _results.push((function () {
-                        var _j, _len2, _ref2, _results2;
-                        _ref2 = graph.nodes;
-                        _results2 = [];
-                        for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
-                            n = _ref2[_j];
-                            if (l.source === n.id) {
-                                l.source = n;
-                                continue;
-                            }
-                            if (l.target === n.id) {
-                                l.target = n;
-                                continue;
-                            } else {
-                                _results2.push(void 0);
-                            }
-                        }
-                        return _results2;
-                    })());
-                }
-                return _results;
-            }),
-            remove: (function (condemned) {
-      /* remove the given node or link from the graph, also deleting dangling links if a node is removed
-      */      if (__indexOf.call(graph.nodes, condemned) >= 0) {
-                    graph.nodes = graph.nodes.filter(function (n) {
-                        return n !== condemned;
-                    });
-                    return graph.links = graph.links.filter(function (l) {
-                        return l.source.id !== condemned.id && l.target.id !== condemned.id;
-                    });
-                } else if (__indexOf.call(graph.links, condemned) >= 0) {
-                    return graph.links = graph.links.filter(function (l) {
-                        return l !== condemned;
-                    });
-                }
-            }),
-            last_index: 0,
-            add_node: (function (type) {
-                var n;
-                n = {
-                    id: graph.last_index++,
-                    x: width / 2,
-                    y: height / 2,
-                    type: type
-                };
-                graph.nodes.push(n);
-                return n;
-            }),
-            add_link: (function (source, target) {
-                /* avoid links to self
-                */
-                var l, link, _i, _len, _ref;
-                if (source === target) return null;
-                /* avoid link duplicates
-                */
-                _ref = graph.links;
-                for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-                    link = _ref[_i];
-                    if (link.source === source && link.target === target) return null;
-                }
-                l = {
-                    source: source,
-                    target: target
-                };
-                graph.links.push(l);
-                return l;
-            })
-        };
+        private graph: graph;
 
-        graph.objectify();
+        public init() {
+            this.graph.objectify();
+        }
+       
+
+       
 
         window.main = (function () {
             /* create the SVG
