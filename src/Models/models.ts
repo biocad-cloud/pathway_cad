@@ -4,20 +4,22 @@ class graph {
     constraints?: constraint[];
     groups?: group[];
 
+    /**
+     * resolve node IDs (not optimized at all!)
+    */
     public objectify() {
-        /* resolve node IDs (not optimized at all!)
-        */
-        var l, n, _i, _len, _ref, _results;
-        _ref = graph.links;
-        _results = [];
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-            l = _ref[_i];
+        const vm = this;
+        const _ref = vm.links;
+        const _results = [];
+
+        for (let _i = 0, _len = _ref.length; _i < _len; _i++) {
+            const l = _ref[_i];
             _results.push((function () {
                 var _j, _len2, _ref2, _results2;
-                _ref2 = graph.nodes;
+                _ref2 = vm.nodes;
                 _results2 = [];
                 for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
-                    n = _ref2[_j];
+                    const n = _ref2[_j];
                     if (l.source === n.id) {
                         l.source = n;
                         continue;
