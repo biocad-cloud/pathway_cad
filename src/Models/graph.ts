@@ -1,8 +1,11 @@
 class graph {
+
     nodes: node[];
     links?: link[];
     constraints?: constraint[];
     groups?: group[];
+
+    private last_index: number = 0;
 
     /**
      * resolve node IDs (not optimized at all!)
@@ -51,35 +54,34 @@ class graph {
             });
         }
     }
-    last_index = 0
-    add_node(type) {
-        var n;
-        n = {
-            id: graph.last_index++,
-            x: width / 2,
-            y: height / 2,
+
+    add_node(type: string): node {
+        const n = <node>{
+            dunnartid: (this.last_index++).toString(),
+            x: 0,
+            y: 0,
             type: type
         };
-        graph.nodes.push(n);
+        this.nodes.push(n);
         return n;
     }
-    add_link(source, target) {
+    add_link(source: number, target: number) {
         /* avoid links to self
         */
-        var l, link, _i, _len, _ref;
         if (source === target) return null;
         /* avoid link duplicates
         */
-        _ref = graph.links;
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-            link = _ref[_i];
-            if (link.source === source && link.target === target) return null;
+        const _ref = this.links;
+        for (let _i = 0, _len = _ref.length; _i < _len; _i++) {
+            const link = _ref[_i];
+            if (link.source === source && link.target === target)
+                return null;
         }
-        l = {
+        const l = <link>{
             source: source,
             target: target
         };
-        graph.links.push(l);
+        this.links.push(l);
         return l;
     }
 }

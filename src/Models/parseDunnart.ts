@@ -11,7 +11,7 @@ namespace dataAdapter {
             let sbsvg = d3.select($ts(svgObjId)).select('svg');
 
             this.sbsvg = sbsvg;
-            this.graph = {
+            this.graph = <any>{
                 nodes: [],
                 links: [],
                 constraints: [],
