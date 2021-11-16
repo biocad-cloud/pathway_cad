@@ -20,10 +20,8 @@ namespace apps {
         private drag = null;
         private drag_link = null;
 
-        /* create some fake data
-        */
-
-        private graph: graph;
+        public constructor(public graph: graph) {
+        }
 
         /**
          * update nodes and links
