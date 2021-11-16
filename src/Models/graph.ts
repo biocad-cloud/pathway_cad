@@ -39,19 +39,15 @@ class graph {
         }
         return _results;
     }
+    /**
+     * remove the given node or link from the graph, also deleting dangling links if a node is removed
+    */
     remove(condemned) {
-      /* remove the given node or link from the graph, also deleting dangling links if a node is removed
-      */      if (__indexOf.call(graph.nodes, condemned) >= 0) {
-            graph.nodes = graph.nodes.filter(function (n) {
-                return n !== condemned;
-            });
-            return graph.links = graph.links.filter(function (l) {
-                return l.source.id !== condemned.id && l.target.id !== condemned.id;
-            });
-        } else if (__indexOf.call(graph.links, condemned) >= 0) {
-            return graph.links = graph.links.filter(function (l) {
-                return l !== condemned;
-            });
+        if (__indexOf.call(this.nodes, condemned) >= 0) {
+            this.nodes = this.nodes.filter(n => n !== condemned);
+            return this.links = this.links.filter(l => l.source.id !== condemned.id && l.target.id !== condemned.id);
+        } else if (__indexOf.call(this.links, condemned) >= 0) {
+            return this.links = this.links.filter(l => l !== condemned);
         }
     }
 
