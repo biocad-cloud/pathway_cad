@@ -11,7 +11,9 @@ namespace apps {
         */
         private selection = null;
         private vis = null;
-        private colorify = null;
+
+        public colorify = null;
+
         private force = null;
         private tool: string;
         private new_link_source = null;
@@ -125,12 +127,14 @@ namespace apps {
             toolbar.append(library);
 
             ['X', 'Y', 'Z', 'W'].forEach(function (type) {
-                const new_btn = $("<svg width='42' height='42'>\n    <g class='node'>\n        <circle\n            cx='21'\n            cy='21'\n            r='18'\n            stroke='" + (global.colorify(type)) + "'\n            fill='" + (d3.hcl(global.colorify(type)).brighter(3)) + "'\n        />\n    </g>\n</svg>");
+                const new_btn = $(buttonHtml(vm, type));
+
                 new_btn.bind('click', function () {
                     vm.graph.add_node(type);
                     return vm.update();
                 });
                 library.append(new_btn);
+
                 return library.hide();
             });
             vm.tool = 'pointer';
