@@ -39,10 +39,11 @@ class graph {
         }
         return _results;
     }
+
     /**
      * remove the given node or link from the graph, also deleting dangling links if a node is removed
     */
-    remove(condemned) {
+    public remove(condemned) {
         if (__indexOf.call(this.nodes, condemned) >= 0) {
             this.nodes = this.nodes.filter(n => n !== condemned);
             return this.links = this.links.filter(l => l.source.id !== condemned.id && l.target.id !== condemned.id);
@@ -51,7 +52,7 @@ class graph {
         }
     }
 
-    add_node(type: string): node {
+    public add_node(type: string): node {
         const n = <node>{
             dunnartid: (this.last_index++).toString(),
             x: 0,
@@ -61,7 +62,8 @@ class graph {
         this.nodes.push(n);
         return n;
     }
-    add_link(source: number, target: number) {
+
+    public add_link(source: number, target: number) {
         /* avoid links to self
         */
         if (source === target) return null;
@@ -78,6 +80,7 @@ class graph {
             target: target
         };
         this.links.push(l);
+
         return l;
     }
 }
