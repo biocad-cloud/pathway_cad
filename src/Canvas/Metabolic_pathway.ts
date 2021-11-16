@@ -65,7 +65,7 @@ namespace apps {
          * initialize data visualization 
          * components.
         */
-        private loadGraph(graph: graph): Cola_graph {
+        private loadGraph(graph: Graph): Cola_graph {
             let groupsLayer = this.vis.append("g");
             let nodesLayer = this.vis.append("g");
             let linksLayer = this.vis.append("g");

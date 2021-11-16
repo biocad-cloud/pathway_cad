@@ -1,4 +1,4 @@
-class graph {
+class Graph {
 
     nodes: node[];
     links?: link[];
@@ -6,6 +6,13 @@ class graph {
     groups?: group[];
 
     private last_index: number = 0;
+
+    public constructor(graph: Graph = null) {
+        if (!isNullOrUndefined(graph)) {
+            this.nodes = graph.nodes;
+            this.links = graph.links;
+        }
+    }
 
     /**
      * resolve node IDs (not optimized at all!)

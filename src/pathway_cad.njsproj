@@ -61,7 +61,7 @@
     </TypeScriptCompile>
     <TypeScriptCompile Include="Models\models.ts" />
     <TypeScriptCompile Include="Models\parseDunnart.ts" />
-    <TypeScriptCompile Include="Models\graph.ts">
+    <TypeScriptCompile Include="Models\Graph.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
   </ItemGroup>

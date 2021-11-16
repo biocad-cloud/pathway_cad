@@ -20,7 +20,12 @@ namespace apps {
         private drag = null;
         private drag_link = null;
 
-        public constructor(public graph: graph) {
+        public constructor(public graph: Graph) {
+            if (graph instanceof Graph) {
+                // do nothing
+            } else {
+                this.graph = new Graph(graph);
+            }
         }
 
         /**

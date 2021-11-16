@@ -3,7 +3,7 @@ namespace dataAdapter {
     export class parseDunnart {
 
         private nodeLookup = {};
-        private graph: graph;
+        private graph: Graph;
 
         private sbsvg;
 
@@ -19,7 +19,7 @@ namespace dataAdapter {
             };
         }
 
-        public getGraph(): graph {
+        public getGraph(): Graph {
             this.loadNodes(this.sbsvg);
 
             let connectors: HTMLElement[] = this.sbsvg.selectAll('.connector')[0];
