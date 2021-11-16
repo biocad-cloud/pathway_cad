@@ -166,9 +166,9 @@ namespace apps {
             const vm = this;
 
             d3.selectAll('.tool').classed('active', false);
-            d3.select(this).classed('active', true);
+            d3.select(library).classed('active', true);
 
-            const new_tool = $(this).data('tool');
+            const new_tool = $(library).data('tool');
             const nodes = vm.vis.selectAll('.node');
 
             if (new_tool === 'add_link' && vm.tool !== 'add_link') {
