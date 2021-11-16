@@ -22,6 +22,11 @@ interface link {
     target: number;
 }
 
+interface graphLink {
+    source: node;
+    target: node;
+}
+
 interface constraint {
     axis: "x" | "y";
     offsets: { node: number, offset: number }[];
