@@ -185,8 +185,8 @@ namespace apps {
             const SD = this.SD;
 
             myDiagram.startTransaction();
-            document.getElementById(SD.itemType + "_button").className = SD.mode + "_normal";
-            document.getElementById(itemType + "_button").className = mode + "_selected";
+            document.getElementById(SD.itemType).className = SD.mode + "_normal";
+            document.getElementById(itemType).className = mode + "_selected";
             SD.mode = mode;
             SD.itemType = itemType;
             if (mode === "pointer") {
