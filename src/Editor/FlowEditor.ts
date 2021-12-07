@@ -205,13 +205,39 @@ namespace apps {
         // Show the diagram's model in JSON format that the user may edit
         save() {
             const myDiagram = this.myDiagram;
+            const modelJson = myDiagram.model.toJson();
 
-            document.getElementById("mySavedModel").value = myDiagram.model.toJson();
             myDiagram.isModified = false;
         }
 
         load() {
-            this.myDiagram.model = go.Model.fromJson(document.getElementById("mySavedModel").value);
+            this.myDiagram.model = go.Model.fromJson($ts.text("#demo-system"));
         }
+
+        //#region "button events"
+        public pointer_click() {
+            this.setMode('pointer', 'pointer');
+        }
+
+        public stock_click() {
+            this.setMode('node', 'stock');
+        }
+
+        public cloud_click() {
+            this.setMode('node', 'cloud');
+        }
+
+        public variable_click() {
+            this.setMode('node', 'variable');
+        }
+
+        public flow_click() {
+            this.setMode('link', 'flow');
+        }
+
+        public influence_click() {
+            this.setMode('link', 'influence');
+        }
+        //#end region
     }
 }
