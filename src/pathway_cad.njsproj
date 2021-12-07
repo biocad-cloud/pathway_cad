@@ -47,6 +47,9 @@
     <TypeScriptCompile Include="Editor\FlowEditor.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="Editor\Templates.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="Explorer\PathwayNavigator.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>

@@ -6,6 +6,7 @@ namespace biodeep.app {
 
     export function start() {
         Router.AddAppHandler(new apps.PathwayExplorer());
+        Router.AddAppHandler(new apps.FlowEditor());
 
         Router.RunApp();
     }
