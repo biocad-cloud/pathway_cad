@@ -44,12 +44,6 @@
     <TypeScriptCompile Include="app.ts" />
     <TypeScriptCompile Include="Canvas\Cola_graph.ts" />
     <TypeScriptCompile Include="Canvas\Metabolic_pathway.ts" />
-    <TypeScriptCompile Include="Editor\GraphEditor.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="Editor\Icons.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
     <TypeScriptCompile Include="Explorer\PathwayNavigator.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
