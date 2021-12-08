@@ -238,6 +238,38 @@ namespace apps {
         public influence_click() {
             this.setMode('link', 'influence');
         }
+
+        public run_click() {
+            const myDiagram = this.myDiagram;
+            const modelJson = myDiagram.model.toJson();
+            const vm = this;
+            const payload = {
+                guid: $ts("@guid"),
+                model: JSON.parse(modelJson)
+            };
+
+            myDiagram.isModified = false;
+
+            // save model at first
+            $ts.post("@api:save", payload, function (resp) {
+                if (resp.code != 0) {
+                    console.error(resp.info);
+                } else {
+                    // and then run model
+                    vm.doRunModel(<any>resp.info);
+                }
+            });
+        }
+
+        private doRunModel(guid: string) {
+            $ts.post("@api:run", { guid: guid }, function (resp) {
+                if (resp.code != 0) {
+                    console.error(resp.info);
+                } else {
+                    $goto(resp.url);
+                }
+            });
+        }
         //#end region
     }
 }
