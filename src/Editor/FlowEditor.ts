@@ -266,7 +266,7 @@ namespace apps {
         }
 
         private doRunModel(guid: string) {
-            $ts.post(`@api:run/?run=${guid}`, { guid: guid }, function (resp) {
+            $ts.post(`@api:run/${guid}`, { guid: guid }, function (resp) {
                 if (resp.code != 0) {
                     console.error(resp.info);
                 } else {
