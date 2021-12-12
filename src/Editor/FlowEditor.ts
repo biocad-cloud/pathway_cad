@@ -223,7 +223,7 @@ namespace apps {
             const myDiagram = this.myDiagram;
             const modelJson = myDiagram.model.toJson();
             const payload = {
-                guid: $ts("@guid"),
+                guid: $ts("@data:model_id"),
                 model: JSON.parse(modelJson),
                 type: "dynamics"
             };
