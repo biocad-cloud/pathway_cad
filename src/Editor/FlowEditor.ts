@@ -202,16 +202,42 @@ namespace apps {
             myDiagram.commitTransaction("mode changed");
         }
 
-        // Show the diagram's model in JSON format that the user may edit
-        save() {
-            const myDiagram = this.myDiagram;
-            const modelJson = myDiagram.model.toJson();
-
-            myDiagram.isModified = false;
+        /**
+         * Show the diagram's model in JSON format 
+         * that the user may edit.
+         * 
+        */
+        public save_click() {
+            this.dosave();
         }
 
         load() {
-            this.myDiagram.model = go.Model.fromJson($ts.text("#demo-system"));
+            const vm = this;
+
+            $ts.getText(`@api:load?model_id=${$ts("@data:model_id")}`, function (json: string) {
+                vm.myDiagram.model = go.Model.fromJson(json);
+            })
+        }
+
+        private dosave(callback: any = null) {
+            const myDiagram = this.myDiagram;
+            const modelJson = myDiagram.model.toJson();
+            const payload = {
+                guid: $ts("@guid"),
+                model: JSON.parse(modelJson),
+                type: "dynamics"
+            };
+
+            myDiagram.isModified = false;
+
+            // save model at first
+            $ts.post("@api:save", payload, function (resp) {
+                if (resp.code != 0) {
+                    console.error(resp.info);
+                } else if (!isNullOrUndefined(resp.info)) {
+                    callback(resp.info);
+                }
+            });
         }
 
         //#region "button events"
@@ -243,26 +269,7 @@ namespace apps {
          * save the current dynamics system
         */
         public run_click() {
-            const myDiagram = this.myDiagram;
-            const modelJson = myDiagram.model.toJson();
-            const vm = this;
-            const payload = {
-                guid: $ts("@guid"),
-                model: JSON.parse(modelJson),
-                type: "dynamics"
-            };
-
-            myDiagram.isModified = false;
-
-            // save model at first
-            $ts.post("@api:save", payload, function (resp) {
-                if (resp.code != 0) {
-                    console.error(resp.info);
-                } else {
-                    // and then run model
-                    vm.doRunModel(<any>resp.info);
-                }
-            });
+            this.dosave(f => this.doRunModel(f))
         }
 
         private doRunModel(guid: string) {
