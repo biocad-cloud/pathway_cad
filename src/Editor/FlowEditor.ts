@@ -150,23 +150,16 @@ namespace apps {
             // Node templates
             myDiagram.nodeTemplateMap.add("stock",
                 $(go.Node, EditorTemplates.nodeStyle(),
-                    $(go.Shape, EditorTemplates.shapeStyle(),
-                        { desiredSize: new go.Size(50, 30) }),
-                    $(go.TextBlock, EditorTemplates.textStyle(),
-                        {
-                            _isNodeLabel: true,  // declare draggable by NodeLabelDraggingTool
-                            alignment: new go.Spot(0.5, 0.5, 0, 30)    // initial value
-                        },
+                    $(go.Shape, EditorTemplates.shapeStyle(), { desiredSize: new go.Size(50, 30) }),
+                    // declare draggable by NodeLabelDraggingTool
+                    // initial value
+                    $(go.TextBlock, EditorTemplates.textStyle(), { _isNodeLabel: true, alignment: new go.Spot(0.5, 0.5, 0, 30) },
                         new go.Binding("alignment", "label_offset", go.Spot.parse).makeTwoWay(go.Spot.stringify))
                 ));
 
             myDiagram.nodeTemplateMap.add("cloud",
                 $(go.Node, EditorTemplates.nodeStyle(),
-                    $(go.Shape, EditorTemplates.shapeStyle(),
-                        {
-                            figure: "Cloud",
-                            desiredSize: new go.Size(35, 35)
-                        })
+                    $(go.Shape, EditorTemplates.shapeStyle(), { figure: "Cloud", desiredSize: new go.Size(35, 35) })
                 ));
 
             myDiagram.nodeTemplateMap.add("valve",
@@ -175,10 +168,7 @@ namespace apps {
                     layerName: "Foreground",
                     alignmentFocus: go.Spot.None
                 },
-                    $(go.Shape, EditorTemplates.shapeStyle(), {
-                        figure: "Ellipse",
-                        desiredSize: new go.Size(20, 20)
-                    }),
+                    $(go.Shape, EditorTemplates.shapeStyle(), { figure: "Ellipse", desiredSize: new go.Size(20, 20) }),
                     $(go.TextBlock, EditorTemplates.textStyle(), {
                         _isNodeLabel: true,  // declare draggable by NodeLabelDraggingTool
                         alignment: new go.Spot(0.5, 0.5, 0, 20)    // initial value
@@ -189,33 +179,22 @@ namespace apps {
             myDiagram.nodeTemplateMap.add("variable",
                 $(go.Node, EditorTemplates.nodeStyle(), { type: go.Panel.Auto },
                     $(go.TextBlock, EditorTemplates.textStyle(), { isMultiline: false }),
-                    $(go.Shape, EditorTemplates.shapeStyle(),
-                        // the port is in front and transparent, even though it goes around the text;
-                        // in "link" mode will support drawing a new link
-                        { isPanelMain: true, stroke: null, fill: "transparent" })
+                    // the port is in front and transparent, even though it goes around the text;
+                    // in "link" mode will support drawing a new link
+                    $(go.Shape, EditorTemplates.shapeStyle(), { isPanelMain: true, stroke: null, fill: "transparent" })
                 ));
 
             // Link templates
             myDiagram.linkTemplateMap.add("flow",
                 $(go.Link, { toShortLength: 8 },
                     $(go.Shape, { stroke: "blue", strokeWidth: 5 }),
-                    $(go.Shape, {
-                        fill: "blue",
-                        stroke: null,
-                        toArrow: "Standard",
-                        scale: 2.5
-                    })
+                    $(go.Shape, { fill: "blue", stroke: null, toArrow: "Standard", scale: 2.5 })
                 ));
 
             myDiagram.linkTemplateMap.add("influence",
                 $(go.Link, { curve: go.Link.Bezier, toShortLength: 8 },
                     $(go.Shape, { stroke: "green", strokeWidth: 1.5 }),
-                    $(go.Shape, {
-                        fill: "green",
-                        stroke: null,
-                        toArrow: "Standard",
-                        scale: 1.5
-                    })
+                    $(go.Shape, { fill: "green", stroke: null, toArrow: "Standard", scale: 1.5 })
                 ));
         }
 
