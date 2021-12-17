@@ -314,7 +314,7 @@ namespace apps {
             $ts.post("@api:save", payload, function (resp) {
                 if (resp.code != 0) {
                     console.error(resp.info);
-                } else if (!isNullOrUndefined(resp.info)) {
+                } else if ((!isNullOrUndefined(resp.info)) && (!isNullOrUndefined(callback))) {
                     callback(resp.info);
                 }
             });
