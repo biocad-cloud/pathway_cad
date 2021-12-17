@@ -3,6 +3,10 @@ namespace apps {
     const intId = /[-]?\d+/ig;
 
     function makeSafeSymbol(name: string) {
+        if (!name) {
+            return null;
+        }
+
         return name
             .toString()
             .replace(".", "_")
@@ -17,7 +21,7 @@ namespace apps {
             if (Strings.IsPattern(node.key.toString(), intId)) {
                 node.key = `T${node.key}`;
             }
-            if (Strings.IsPattern(node.group.toString(), intId)) {
+            if (node.group && Strings.IsPattern(node.group.toString(), intId)) {
                 node.group = `T${node.group}`;
             }
 
