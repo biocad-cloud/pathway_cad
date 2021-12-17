@@ -305,7 +305,7 @@ namespace apps {
             const modelJson = myDiagram.model.toJson();
             const payload = {
                 guid: $ts("@data:model_id"),
-                model: JSON.parse(modelJson),
+                model: apps.ModelPatch(JSON.parse(modelJson)),
                 type: "dynamics"
             };
 

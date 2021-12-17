@@ -50,6 +50,9 @@
     <TypeScriptCompile Include="Editor\Templates.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="Editor\ModelPatch.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="Explorer\PathwayNavigator.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
