@@ -40,6 +40,7 @@ namespace apps {
             commitTransaction,
             nodeTemplateMap,
             linkTemplateMap,
+            groupTemplate,
             allowLink,
             nodes: { each }
         };
@@ -77,6 +78,8 @@ namespace apps {
                 },
 
                 "clickCreatingTool.archetypeNodeData": {},   // enable ClickCreatingTool
+                // allow Ctrl-G to call groupSelection()
+                "commandHandler.archetypeGroupData": { text: "Group", isGroup: true, color: "blue" },
                 "clickCreatingTool.isDoubleClick": false,    // operates on a single click in background
                 "clickCreatingTool.canStart": function () {  // but only in "node" creation mode
                     return SD.mode === "node" && go.ClickCreatingTool.prototype.canStart.call(this);
@@ -196,6 +199,63 @@ namespace apps {
                     $(go.Shape, { stroke: "green", strokeWidth: 1.5 }),
                     $(go.Shape, { fill: "green", stroke: null, toArrow: "Standard", scale: 1.5 })
                 ));
+
+            // Groups consist of a title in the color given by the group node data
+            // above a translucent gray rectangle surrounding the member parts
+            myDiagram.groupTemplate =
+                $(go.Group, "Vertical",
+                    {
+                        selectionObjectName: "PANEL",  // selection handle goes around shape, not label
+                        ungroupable: true  // enable Ctrl-Shift-G to ungroup a selected Group
+                    },
+                    $(go.TextBlock,
+                        {
+                            //alignment: go.Spot.Right,
+                            font: "bold 19px sans-serif",
+                            isMultiline: false,  // don't allow newlines in text
+                            editable: true  // allow in-place editing by user
+                        },
+                        new go.Binding("text", "text").makeTwoWay(),
+                        new go.Binding("stroke", "color")),
+                    $(go.Panel, "Auto",
+                        { name: "PANEL" },
+                        $(go.Shape, "Rectangle",  // the rectangular shape around the members
+                            {
+                                fill: "rgba(128,128,128,0.2)", stroke: "gray", strokeWidth: 3,
+                                portId: "", cursor: "pointer",  // the Shape is the port, not the whole Node
+                                // allow all kinds of links from and to this port
+                                fromLinkable: true, fromLinkableSelfNode: true, fromLinkableDuplicates: true,
+                                toLinkable: true, toLinkableSelfNode: true, toLinkableDuplicates: true
+                            }),
+                        $(go.Placeholder, { margin: 10, background: "transparent" })  // represents where the members are
+                    ),
+                    { // this tooltip Adornment is shared by all groups
+                        toolTip:
+                            $("ToolTip",
+                                $(go.TextBlock, { margin: 4 },
+                                    // bind to tooltip, not to Group.data, to allow access to Group properties
+                                    new go.Binding("text", "", FlowEditor.groupInfo).ofObject())
+                            )
+                    }
+                );
+
+        }
+
+        /**
+         * Define the appearance and behavior for Groups
+        */
+        private static groupInfo(adornment) {
+            // takes the tooltip or context menu, not a group node data object
+            var g = adornment.adornedPart;
+            // get the Group that the tooltip adorns
+            var mems = g.memberParts.count;
+            var links = 0;
+
+            g.memberParts.each(function (part) {
+                if (part instanceof go.Link) links++;
+            });
+
+            return "Group " + g.data.key + ": " + g.data.text + "\n" + mems + " members including " + links + " links";
         }
 
         setMode(mode: string, itemType: string) {
