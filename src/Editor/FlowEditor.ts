@@ -7,16 +7,42 @@ namespace apps {
         }
 
         /**
-         * SD is a global variable, to avoid polluting global namespace and to make the global
-         * nature of the individual variables obvious.
+         * SD is a global variable, to avoid polluting global namespace 
+         * and to make the global nature of the individual variables 
+         * obvious.
         */
         readonly SD = {
-            mode: "pointer",   // Set to default mode.  Alternatives are "node" and "link", for
-            // adding a new node or a new link respectively.
-            itemType: "pointer",    // Set when user clicks on a node or link button.
+            /**
+             * Set to default mode.  Alternatives are 
+             * "node" and "link", for adding a new node 
+             * or a new link respectively.
+            */
+            mode: "pointer",
+            /**
+             * Set when user clicks on a node or link 
+             * button.
+            */
+            itemType: "pointer",
             nodeCounter: { stock: 0, cloud: 0, variable: 0, valve: 0 }
         };
-        private myDiagram;   // Declared as global
+
+        /**
+         * Declared as global
+        */
+        private myDiagram: {
+            toolManager: {
+                mouseMoveTools
+            },
+            addDiagramListener,
+            model,
+            isModified: boolean,
+            startTransaction,
+            commitTransaction,
+            nodeTemplateMap,
+            linkTemplateMap,
+            allowLink,
+            nodes: { each }
+        };
 
         private config() {
             const SD = this.SD;
@@ -33,6 +59,7 @@ namespace apps {
                     this.temporaryLink.curve = (SD.itemType === "flow") ? go.Link.Normal : go.Link.Bezier;
                     this.temporaryLink.path.stroke = (SD.itemType === "flow") ? "blue" : "green";
                     this.temporaryLink.path.strokeWidth = (SD.itemType === "flow") ? 5 : 1;
+
                     go.LinkingTool.prototype.doActivate.call(this);
                 },
                 // override the link creation process
@@ -45,22 +72,26 @@ namespace apps {
                     this.archetypeLabelNodeData = (SD.itemType === "flow") ? { category: "valve" } : null;
                     // also change the text indicating the condition, which the user can edit
                     this.archetypeLinkData.text = SD.itemType;
+
                     return go.LinkingTool.prototype.insertLink.call(this, fromnode, fromport, tonode, toport);
                 },
 
-                "clickCreatingTool.archetypeNodeData": {},  // enable ClickCreatingTool
-                "clickCreatingTool.isDoubleClick": false,   // operates on a single click in background
+                "clickCreatingTool.archetypeNodeData": {},   // enable ClickCreatingTool
+                "clickCreatingTool.isDoubleClick": false,    // operates on a single click in background
                 "clickCreatingTool.canStart": function () {  // but only in "node" creation mode
                     return SD.mode === "node" && go.ClickCreatingTool.prototype.canStart.call(this);
                 },
-                "clickCreatingTool.insertPart": function (loc) {  // customize the data for the new node
+                "clickCreatingTool.insertPart": function (loc) {
+                    // customize the data for the new node
                     SD.nodeCounter[SD.itemType] += 1;
-                    var newNodeId = SD.itemType + SD.nodeCounter[SD.itemType];
+                    const newNodeId = SD.itemType + SD.nodeCounter[SD.itemType];
+
                     this.archetypeNodeData = {
                         key: newNodeId,
                         category: SD.itemType,
                         label: newNodeId
                     };
+
                     return go.ClickCreatingTool.prototype.insertPart.call(this, loc);
                 }
             }
@@ -70,16 +101,21 @@ namespace apps {
             const $: any = go.GraphObject.make;
             const SD = this.SD;
             const vm = this;
-            const myDiagram = vm.myDiagram = $(go.Diagram, "myDiagram", vm.config());
+
+            vm.myDiagram = $(go.Diagram, "myDiagram", vm.config());
+
+            const myDiagram = vm.myDiagram;
 
             // install the NodeLabelDraggingTool as a "mouse move" tool
             myDiagram.toolManager.mouseMoveTools.insertAt(0, new NodeLabelDraggingTool());
 
             // when the document is modified, add a "*" to the title and enable the "Save" button
             myDiagram.addDiagramListener("Modified", function (e) {
-                var button = document.getElementById("SaveButton");
+                const button = document.getElementById("SaveButton");
+                const idx = document.title.indexOf("*");
+
                 if (button) button.disabled = !myDiagram.isModified;
-                var idx = document.title.indexOf("*");
+
                 if (myDiagram.isModified) {
                     if (idx < 0) document.title += "*";
                 } else {
@@ -89,12 +125,15 @@ namespace apps {
 
             // generate unique label for valve on newly-created flow link
             myDiagram.addDiagramListener("LinkDrawn", function (e) {
-                var link = e.subject;
+                const link = e.subject;
+
                 if (link.category === "flow") {
                     myDiagram.startTransaction("updateNode");
                     SD.nodeCounter.valve += 1;
-                    var newNodeId = "flow" + SD.nodeCounter.valve;
-                    var labelNode = link.labelNodes.first();
+
+                    const newNodeId = "flow" + SD.nodeCounter.valve;
+                    const labelNode = link.labelNodes.first();
+
                     myDiagram.model.setDataProperty(labelNode.data, "label", newNodeId);
                     myDiagram.commitTransaction("updateNode");
                 }
@@ -180,7 +219,7 @@ namespace apps {
                 ));
         }
 
-        setMode(mode, itemType) {
+        setMode(mode: string, itemType: string) {
             const myDiagram = this.myDiagram;
             const SD = this.SD;
 
@@ -189,16 +228,18 @@ namespace apps {
             document.getElementById(itemType).className = mode + "_selected";
             SD.mode = mode;
             SD.itemType = itemType;
+
             if (mode === "pointer") {
                 myDiagram.allowLink = false;
-                myDiagram.nodes.each(function (n) { n.port.cursor = ""; });
+                myDiagram.nodes.each(n => n.port.cursor = "");
             } else if (mode === "node") {
                 myDiagram.allowLink = false;
-                myDiagram.nodes.each(function (n) { n.port.cursor = ""; });
+                myDiagram.nodes.each(n => n.port.cursor = "");
             } else if (mode === "link") {
                 myDiagram.allowLink = true;
-                myDiagram.nodes.each(function (n) { n.port.cursor = "pointer"; });
+                myDiagram.nodes.each(n => n.port.cursor = "pointer");
             }
+
             myDiagram.commitTransaction("mode changed");
         }
 
