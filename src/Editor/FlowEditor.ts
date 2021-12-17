@@ -296,8 +296,11 @@ namespace apps {
             const vm = this;
 
             $ts.getText(`@api:load?model_id=${$ts("@data:model_id")}`, function (json: string) {
-                vm.myDiagram.model = go.Model.fromJson(json);
-            })
+                const model: Model = ModelPatch(JSON.parse(json));
+                const jsonStr: string = JSON.stringify(model)
+
+                vm.myDiagram.model = go.Model.fromJson(jsonStr);
+            });
         }
 
         private dosave(callback: any = null) {

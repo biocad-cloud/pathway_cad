@@ -18,15 +18,14 @@ namespace apps {
 
     export function ModelPatch(model: Model) {
         for (let node of model.nodeDataArray) {
+            if (node.isGroup) {
+                continue;
+            }
             if (Strings.IsPattern(node.key.toString(), intId)) {
                 node.key = `T${node.key}`;
             }
-            if (node.group && Strings.IsPattern(node.group.toString(), intId)) {
-                node.group = `T${node.group}`;
-            }
 
             node.key = makeSafeSymbol(node.key);
-            node.group = makeSafeSymbol(node.group);
         }
 
         for (let link of model.linkDataArray) {
@@ -61,6 +60,7 @@ namespace apps {
             key: string
             label: string
             loc: string
+            isGroup: boolean
         }[]
         linkDataArray: {
             category: string
