@@ -87,7 +87,7 @@ namespace apps {
                 "clickCreatingTool.insertPart": function (loc) {
                     // customize the data for the new node
                     SD.nodeCounter[SD.itemType] += 1;
-                    const newNodeId = SD.itemType + SD.nodeCounter[SD.itemType];
+                    const newNodeId = "T" + SD.itemType + SD.nodeCounter[SD.itemType];
 
                     this.archetypeNodeData = {
                         key: newNodeId,
@@ -156,7 +156,9 @@ namespace apps {
                     $(go.Shape, EditorTemplates.shapeStyle(), { desiredSize: new go.Size(50, 30) }),
                     // declare draggable by NodeLabelDraggingTool
                     // initial value
-                    $(go.TextBlock, EditorTemplates.textStyle(), { _isNodeLabel: true, alignment: new go.Spot(0.5, 0.5, 0, 30) },
+                    $(go.TextBlock, EditorTemplates.textStyle(), {
+                        _isNodeLabel: true, alignment: new go.Spot(0.5, 0.5, 0, 30)
+                    },
                         new go.Binding("alignment", "label_offset", go.Spot.parse).makeTwoWay(go.Spot.stringify))
                 ));
 
@@ -217,8 +219,7 @@ namespace apps {
                         },
                         new go.Binding("text", "text").makeTwoWay(),
                         new go.Binding("stroke", "color")),
-                    $(go.Panel, "Auto",
-                        { name: "PANEL" },
+                    $(go.Panel, "Auto", { name: "PANEL" },
                         $(go.Shape, "Rectangle",  // the rectangular shape around the members
                             {
                                 fill: "rgba(128,128,128,0.2)", stroke: "gray", strokeWidth: 3,
