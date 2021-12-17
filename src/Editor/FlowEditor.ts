@@ -87,7 +87,7 @@ namespace apps {
                 "clickCreatingTool.insertPart": function (loc) {
                     // customize the data for the new node
                     SD.nodeCounter[SD.itemType] += 1;
-                    const newNodeId = "T" + SD.itemType + SD.nodeCounter[SD.itemType];
+                    const newNodeId = SD.itemType + SD.nodeCounter[SD.itemType];
 
                     this.archetypeNodeData = {
                         key: newNodeId,
