@@ -1,5 +1,11 @@
 namespace apps.translation {
 
+    export const paper_colors: string[] = [
+        "#D02823", "#0491d0", "#88bb64", "#15DBFF",
+        "#583B73", "#f2ce3f", "#8858BF", "#CCFF33",
+        "#fb5b44", "#361f32", "#DF2789", "#396b1c"
+    ];
+
     export function translateToColaGraph(graph: apps.Model): Graph {
         const g = <Graph>{
             groups: [],
@@ -12,10 +18,12 @@ namespace apps.translation {
 
         for (let node of graph.nodeDataArray) {
             if ((!isNullOrUndefined(node.isGroup)) && node.isGroup) {
+                const color: string = paper_colors[Object.keys(groups).length];
+
                 groups[node.key.toString()] = <group>{
                     leaves: [],
                     padding: 10,
-                    style: "fill:#4db987;fill-opacity:0.31764700000000001;stroke:#4db987;stroke-opacity:1"
+                    style: `fill:${color};fill-opacity:0.31764700000000001;stroke:${color};stroke-opacity:1`
                 }
             }
         }
