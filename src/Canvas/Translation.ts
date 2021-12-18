@@ -51,6 +51,10 @@ namespace apps.translation {
             });
         }
 
+        for (let name in groups) {
+            g.groups.push(groups[name]);
+        }
+
         return g;
     }
 }
