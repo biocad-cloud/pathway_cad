@@ -79,6 +79,9 @@ namespace apps {
 
             console.log(JSON.stringify(graph));
 
+            console.log("view nodes details:");
+            console.table(graph.nodes);
+
             this.d3cola
                 .nodes(graph.nodes)
                 .links(graph.links)
