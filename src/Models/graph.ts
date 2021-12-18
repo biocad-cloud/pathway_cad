@@ -1,5 +1,10 @@
 class Graph {
 
+    /**
+     * required of model format translation when
+     * the class value is "GraphLinksModel"
+    */
+    class: string;
     nodes: node[];
     links?: link[];
     constraints?: constraint[];

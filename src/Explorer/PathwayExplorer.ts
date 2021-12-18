@@ -14,14 +14,16 @@ namespace apps {
             const vm = this;
             const assembly: string = localStorage.getItem(this.assemblyKey);
 
-            if (Strings.Empty(assembly)) {
-                // get from server and cached into localstorage
-                $ts.get(dataUrl, function (obj) {
-                    vm.saveCache(<any>obj);
-                    vm.loadCache();
-                })
-            } else {
-                vm.loadCache()
+            if (!Strings.Empty(dataUrl, true)) {
+                if (Strings.Empty(assembly)) {
+                    // get from server and cached into localstorage
+                    $ts.get(dataUrl, function (obj) {
+                        vm.saveCache(<any>obj);
+                        vm.loadCache();
+                    })
+                } else {
+                    vm.loadCache()
+                }
             }
 
             vm.canvas.init();

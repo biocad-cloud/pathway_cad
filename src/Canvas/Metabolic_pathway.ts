@@ -25,6 +25,9 @@ namespace apps {
             saveSvgAsPng(<any>$ts("#canvas").childNodes.item(0), "pathway.png");
         }
 
+        /**
+         * show model file
+        */
         public init(): Metabolic_pathway {
             let graph_url: string = <any>$ts("@url:graph");
 
@@ -69,6 +72,10 @@ namespace apps {
             let groupsLayer = this.vis.append("g");
             let nodesLayer = this.vis.append("g");
             let linksLayer = this.vis.append("g");
+
+            if ((!Strings.Empty(graph.class)) && (graph.class == "GraphLinksModel")) {
+                graph = apps.translation.translateToColaGraph(<any>graph);
+            }
 
             console.log(JSON.stringify(graph));
 
