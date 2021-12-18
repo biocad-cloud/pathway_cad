@@ -55,7 +55,7 @@ namespace apps {
 
     export interface Model {
         nodeDataArray: {
-            category: string
+            category: "valve" | "stock" | "cloud" | "variable"
             group: string
             key: string
             label: string
@@ -63,7 +63,7 @@ namespace apps {
             isGroup: boolean
         }[]
         linkDataArray: {
-            category: string
+            category: "flow" | "influence"
             from: string
             labelKeys: string[]
             text: string
