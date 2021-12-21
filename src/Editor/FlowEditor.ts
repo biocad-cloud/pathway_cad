@@ -29,7 +29,7 @@ namespace apps {
         /**
          * Declared as global
         */
-        private myDiagram: {
+        private goCanvas: {
             toolManager: {
                 mouseMoveTools
             },
@@ -67,7 +67,7 @@ namespace apps {
                 "linkingTool.insertLink": function (fromnode, fromport, tonode, toport) {
                     // to control what kind of Link is created,
                     // change the LinkingTool.archetypeLinkData's category
-                    vm.myDiagram.model.setCategoryForLinkData(this.archetypeLinkData, SD.itemType);
+                    vm.goCanvas.model.setCategoryForLinkData(this.archetypeLinkData, SD.itemType);
                     // Whenever a new Link is drawng by the LinkingTool, it also adds a node data object
                     // that acts as the label node for the link, to allow links to be drawn to/from the link.
                     this.archetypeLabelNodeData = (SD.itemType === "flow") ? { category: "valve" } : null;
@@ -105,9 +105,9 @@ namespace apps {
             const SD = this.SD;
             const vm = this;
 
-            vm.myDiagram = $(go.Diagram, "myDiagram", vm.config());
+            vm.goCanvas = $(go.Diagram, "myDiagram", vm.config());
 
-            const myDiagram = vm.myDiagram;
+            const myDiagram = vm.goCanvas;
 
             // install the NodeLabelDraggingTool as a "mouse move" tool
             myDiagram.toolManager.mouseMoveTools.insertAt(0, new NodeLabelDraggingTool());
@@ -148,7 +148,7 @@ namespace apps {
 
         buildTemplates() {
             const $ = go.GraphObject.make;
-            const myDiagram = this.myDiagram;
+            const myDiagram = this.goCanvas;
 
             // Node templates
             myDiagram.nodeTemplateMap.add("stock",
@@ -173,7 +173,7 @@ namespace apps {
                     layerName: "Foreground",
                     alignmentFocus: go.Spot.None
                 },
-                    $(go.Shape, EditorTemplates.shapeStyle(), { figure: "Ellipse", desiredSize: new go.Size(20, 20) }),
+                    $(go.Shape, EditorTemplates.shapeStyle(), { figure: "Ellipse", desiredSize: new go.Size(5, 5) }),
                     $(go.TextBlock, EditorTemplates.textStyle(), {
                         _isNodeLabel: true,  // declare draggable by NodeLabelDraggingTool
                         alignment: new go.Spot(0.5, 0.5, 0, 20)    // initial value
@@ -260,7 +260,7 @@ namespace apps {
         }
 
         setMode(mode: string, itemType: string) {
-            const myDiagram = this.myDiagram;
+            const myDiagram = this.goCanvas;
             const SD = this.SD;
 
             myDiagram.startTransaction();
@@ -299,12 +299,12 @@ namespace apps {
                 const model: Model = ModelPatch(JSON.parse(json));
                 const jsonStr: string = JSON.stringify(model)
 
-                vm.myDiagram.model = go.Model.fromJson(jsonStr);
+                vm.goCanvas.model = go.Model.fromJson(jsonStr);
             });
         }
 
         private dosave(callback: any = null) {
-            const myDiagram = this.myDiagram;
+            const myDiagram = this.goCanvas;
             const modelJson = myDiagram.model.toJson();
             const payload = {
                 guid: $ts("@data:model_id"),

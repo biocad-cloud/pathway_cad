@@ -16,6 +16,7 @@ namespace apps.translation {
         const nodeIndex: {} = {};
         const groups: {} = {};
 
+        // get pathway group information
         for (let node of graph.nodeDataArray) {
             if ((!isNullOrUndefined(node.isGroup)) && node.isGroup) {
                 const color: string = paper_colors[Object.keys(groups).length];
@@ -28,8 +29,11 @@ namespace apps.translation {
             }
         }
 
+        // add node into network graph
         for (let node of graph.nodeDataArray) {
             if ((!isNullOrUndefined(node.isGroup)) && node.isGroup) {
+                continue;
+            } else if (node.category == "valve") {
                 continue;
             }
 
