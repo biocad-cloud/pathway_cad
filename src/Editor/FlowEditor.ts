@@ -153,10 +153,10 @@ namespace apps {
             // Node templates
             myDiagram.nodeTemplateMap.add("stock",
                 $(go.Node, EditorTemplates.nodeStyle(),
-                    $(go.Shape, EditorTemplates.shapeStyle(), { desiredSize: new go.Size(50, 30) }),
+                    $(go.Shape, EditorTemplates.shapeStyle(), { desiredSize: new go.Size(90, 30) }),
                     // declare draggable by NodeLabelDraggingTool
                     // initial value
-                    $(go.TextBlock, EditorTemplates.textStyle(), //{
+                    $(go.TextBlock, EditorTemplates.textStyle(10), //{
                         // _isNodeLabel: true, alignment: new go.Spot(0.5, 0.5, 0, 30)                     
                    // },
                         new go.Binding("text", "label"))
@@ -191,7 +191,15 @@ namespace apps {
 
             // Link templates
             myDiagram.linkTemplateMap.add("flow",
-                $(go.Link, { toShortLength: 8 },
+                $(go.Link, {
+                    toShortLength: 8,
+                    routing: go.Link.AvoidsNodes,
+                    corner: 5,
+                    relinkableFrom: true,
+                    relinkableTo: true,
+                    reshapable: true,
+                    resegmentable: true
+                },
                     $(go.Shape, { stroke: "blue", strokeWidth: 3 }),
                     $(go.Shape, { fill: "blue", stroke: null, toArrow: "Standard", scale: 1.5 })
                 ));
