@@ -25,10 +25,10 @@ namespace apps.EditorTemplates {
         };
     }
 
-    export function textStyle() {
+    export function textStyle(fontsize = 11) {
         return [
             {
-                font: "bold 11pt helvetica, bold arial, sans-serif",
+                font: `bold ${fontsize}pt helvetica, bold arial, sans-serif`,
                 margin: 2,
                 editable: true
             },

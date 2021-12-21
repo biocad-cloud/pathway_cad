@@ -156,10 +156,10 @@ namespace apps {
                     $(go.Shape, EditorTemplates.shapeStyle(), { desiredSize: new go.Size(50, 30) }),
                     // declare draggable by NodeLabelDraggingTool
                     // initial value
-                    $(go.TextBlock, EditorTemplates.textStyle(), {
-                        _isNodeLabel: true, alignment: new go.Spot(0.5, 0.5, 0, 30)
-                    },
-                        new go.Binding("alignment", "label_offset", go.Spot.parse).makeTwoWay(go.Spot.stringify))
+                    $(go.TextBlock, EditorTemplates.textStyle(), //{
+                        // _isNodeLabel: true, alignment: new go.Spot(0.5, 0.5, 0, 30)                     
+                   // },
+                        new go.Binding("text", "key"))
                 ));
 
             myDiagram.nodeTemplateMap.add("cloud",
@@ -174,7 +174,7 @@ namespace apps {
                     alignmentFocus: go.Spot.None
                 },
                     $(go.Shape, EditorTemplates.shapeStyle(), { figure: "Ellipse", desiredSize: new go.Size(5, 5) }),
-                    $(go.TextBlock, EditorTemplates.textStyle(), {
+                    $(go.TextBlock, EditorTemplates.textStyle(4), {
                         _isNodeLabel: true,  // declare draggable by NodeLabelDraggingTool
                         alignment: new go.Spot(0.5, 0.5, 0, 20)    // initial value
                     },
@@ -192,8 +192,8 @@ namespace apps {
             // Link templates
             myDiagram.linkTemplateMap.add("flow",
                 $(go.Link, { toShortLength: 8 },
-                    $(go.Shape, { stroke: "blue", strokeWidth: 5 }),
-                    $(go.Shape, { fill: "blue", stroke: null, toArrow: "Standard", scale: 2.5 })
+                    $(go.Shape, { stroke: "blue", strokeWidth: 3 }),
+                    $(go.Shape, { fill: "blue", stroke: null, toArrow: "Standard", scale: 1.5 })
                 ));
 
             myDiagram.linkTemplateMap.add("influence",
