@@ -159,7 +159,7 @@ namespace apps {
                     $(go.TextBlock, EditorTemplates.textStyle(), //{
                         // _isNodeLabel: true, alignment: new go.Spot(0.5, 0.5, 0, 30)                     
                    // },
-                        new go.Binding("text", "key"))
+                        new go.Binding("text", "label"))
                 ));
 
             myDiagram.nodeTemplateMap.add("cloud",
@@ -174,7 +174,7 @@ namespace apps {
                     alignmentFocus: go.Spot.None
                 },
                     $(go.Shape, EditorTemplates.shapeStyle(), { figure: "Ellipse", desiredSize: new go.Size(5, 5) }),
-                    $(go.TextBlock, EditorTemplates.textStyle(4), {
+                    $(go.TextBlock, EditorTemplates.textStyle(0), {
                         _isNodeLabel: true,  // declare draggable by NodeLabelDraggingTool
                         alignment: new go.Spot(0.5, 0.5, 0, 20)    // initial value
                     },
