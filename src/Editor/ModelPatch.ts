@@ -61,6 +61,10 @@ namespace apps {
             label: string
             loc: string
             isGroup: boolean
+            /**
+             * text label of the node element
+            */
+            text: string 
         }[]
         linkDataArray: {
             category: "flow" | "influence"
