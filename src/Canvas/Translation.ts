@@ -29,12 +29,26 @@ namespace apps.translation {
             }
         }
 
+        let pos: number[];
+
         // add node into network graph
         for (let node of graph.nodeDataArray) {
             if ((!isNullOrUndefined(node.isGroup)) && node.isGroup) {
                 continue;
             } else if (node.category == "valve") {
                 continue;
+            }
+
+            const loc = node.loc;
+
+            if (Strings.Empty(loc)) {
+                pos = [0, 0];
+            } else {
+                pos = loc.split(/\s+/ig).map(t => parseFloat(t));
+            }
+
+            if (pos.length < 2) {
+                pos = [0, 0];
             }
 
             g.nodes.push(<node>{
@@ -45,8 +59,8 @@ namespace apps.translation {
                 rx: 9,
                 ry: 9,
                 width: 60,
-                x: 0,
-                y: 0
+                x: pos[0],
+                y: pos[1]
             });
 
             nodeIndex[node.key] = g.nodes.length - 1;
