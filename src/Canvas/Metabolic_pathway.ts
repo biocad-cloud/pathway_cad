@@ -53,7 +53,7 @@ namespace apps {
 
             if (graph_url.charAt(0) == "#") {
                 // load from a svg container node            
-                this.d3cola.on("tick", this.loadGraph(new dataAdapter.parseDunnart(graph_url).getGraph()).tick());
+                this.d3cola.on("tick", this.loadGraph(Metabolic_pathway.readGraph(graph_url)).tick());
             } else {
                 $ts.getText(graph_url, json => this.d3cola.on("tick", this.loadGraph(JSON.parse(json)).tick()))
             }
@@ -61,6 +61,19 @@ namespace apps {
             TypeScript.logging.log("intialization job done!", TypeScript.ConsoleColors.DarkBlue);
 
             return this;
+        }
+
+        private static readGraph(id: string): Graph {
+            const html = $ts(id);
+
+            if (html.tagName.toLowerCase() == "script") {
+                const json: Model = JSON.parse(html.innerText);
+                const graph: Graph = translation.translateToColaGraph(json);
+
+                return graph;
+            } else {
+                return new dataAdapter.parseDunnart(id).getGraph();
+            }
         }
 
         /**
