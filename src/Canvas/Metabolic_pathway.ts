@@ -13,8 +13,19 @@ namespace apps {
         private vis;
 
         public constructor() {
-            this.width = parseFloat(<string><any>$ts("@width"));
-            this.height = parseFloat(<string><any>$ts("@height"));
+            console.log("get display size:");
+
+            this.width = this.getDim("@width");
+            this.height = this.getDim("@height");
+
+            console.log({
+                width: this.width,
+                height: this.height
+            });
+        }
+
+        private getDim(key: string): number {
+            return parseFloat(<string><any>$ts(key));
         }
 
         private redraw() {
