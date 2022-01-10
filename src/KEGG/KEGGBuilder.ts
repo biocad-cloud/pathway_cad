@@ -39,6 +39,9 @@ namespace apps {
                     suggest(search);
                 }
             }
+
+            TypeScript.logging.log(`${terms.length} kegg components has been loaded!`, TypeScript.ConsoleColors.Magenta);
+            TypeScript.logging.log(" ~done!", TypeScript.ConsoleColors.Magenta);
         }
 
         private clickOnTerm(term: SearchTerm) {
