@@ -1,18 +1,19 @@
 namespace apps {
 
+    export const assemblyKey: string = "ko00001-assembly";
+
     export class PathwayExplorer extends Bootstrap {
 
         public get appName(): string {
             return "Pathway_explorer";
         };
 
-        readonly assemblyKey: string = "ko00001-assembly";
         readonly canvas: Metabolic_pathway = new Metabolic_pathway();
 
         protected init(): void {
             const dataUrl: string = <any>$ts("@data:repository");
             const vm = this;
-            const assembly: string = localStorage.getItem(this.assemblyKey);
+            const assembly: string = localStorage.getItem(assemblyKey);
 
             if (!Strings.Empty(dataUrl, true)) {
                 if (Strings.Empty(assembly)) {
@@ -74,11 +75,15 @@ namespace apps {
                 localStorage.setItem(cacheKey, JSON.stringify(data));
             }
 
-            localStorage.setItem(this.assemblyKey, JSON.stringify(cacheKeys));
+            localStorage.setItem(assemblyKey, JSON.stringify(cacheKeys));
         }
 
         private loadCache() {
-            const assembly: string = localStorage.getItem(this.assemblyKey);
+            this.loadUITree(PathwayExplorer.loadKEGGTree());
+        }
+
+        public static loadKEGGTree() {
+            const assembly: string = localStorage.getItem(assemblyKey);
             const keys: string[] = JSON.parse(assembly);
             const keggTree = <KEGG.brite.IKEGGBrite>{
                 name: "ko00001",
@@ -94,7 +99,7 @@ namespace apps {
                 keggTree.children.push(JSON.parse(cache));
             }
 
-            this.loadUITree(keggTree);
+            return keggTree;
         }
     }
 }

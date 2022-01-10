@@ -1,3 +1,5 @@
+/// <reference path="../../../build/biocad.d.ts" />
+
 namespace apps {
 
     export class KEGGNetwork extends Bootstrap {
@@ -7,7 +9,9 @@ namespace apps {
         }
 
         protected init(): void {
-            throw new Error("Method not implemented.");
+            const tree = PathwayExplorer.loadKEGGTree();
+
+            console.log(tree);
         }
     }
 }

@@ -7,6 +7,7 @@ namespace biodeep.app {
     export function start() {
         Router.AddAppHandler(new apps.PathwayExplorer());
         Router.AddAppHandler(new apps.FlowEditor());
+        Router.AddAppHandler(new apps.KEGGNetwork());
 
         Router.RunApp();
     }
