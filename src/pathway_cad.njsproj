@@ -39,6 +39,7 @@
     <Folder Include="Models\" />
     <Folder Include="Explorer\" />
     <Folder Include="Editor\" />
+    <Folder Include="KEGG\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="app.ts" />
@@ -63,6 +64,9 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Explorer\PathwayExplorer.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="KEGG\KEGGBuilder.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Models\models.ts" />
