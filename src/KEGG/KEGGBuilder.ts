@@ -20,8 +20,12 @@ namespace apps {
             KEGGNetwork.createSet(tree, components);
 
             const terms: SearchTerm[] = [];
+            const unique = $from(components)
+                .GroupBy(t => t.text.split(/\s+/ig)[0])
+                .Select(t => t.First)
+                .ToArray();
 
-            for (let koId of components) {
+            for (let koId of unique) {
                 terms.push(new Application.Suggestion.term(koId.id, koId.text));
             }
 
@@ -40,7 +44,7 @@ namespace apps {
                 }
             }
 
-            TypeScript.logging.log(`${terms.length} kegg components has been loaded!`, TypeScript.ConsoleColors.Magenta);
+            TypeScript.logging.log(`${components.length} kegg components has been loaded!`, TypeScript.ConsoleColors.Magenta);
             TypeScript.logging.log(" ~done!", TypeScript.ConsoleColors.Magenta);
         }
 
