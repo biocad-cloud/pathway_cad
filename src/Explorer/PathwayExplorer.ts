@@ -62,7 +62,7 @@ namespace apps {
             }
         }
 
-        private saveCache(obj: KEGG.brite.IKEGGBrite) {
+        public static saveCache(obj: KEGG.brite.IKEGGBrite) {
             const cacheKeys: string[] = [];
 
             for (let data of obj.children) {
