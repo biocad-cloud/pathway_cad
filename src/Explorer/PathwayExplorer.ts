@@ -8,11 +8,11 @@ namespace apps {
             return "Pathway_explorer";
         };
 
-        readonly canvas: Metabolic_pathway = new Metabolic_pathway();
+        // readonly canvas: Metabolic_pathway = new Metabolic_pathway();
 
         protected init(): void {
             PathwayExplorer.initKEGG(() => this.loadCache());
-            this.canvas.init();
+            // this.canvas.init();
         }
 
         public static initKEGG(loadCache: Delegate.Action) {
@@ -50,6 +50,26 @@ namespace apps {
                     }
                 }
             });
+
+            $(`#${target}`).on("click", ".jstree-anchor", function (e) {
+                const id: string = $(`#${target}`).jstree(true).get_node($(this)).id;
+                const mapId = `map${id.split("_")[0]}`;
+
+                $ts("#canvas")
+                    .clear()
+                    .display($ts("<iframe>", {
+                        src: `@url:readmap/${mapId}`,
+                        width: "1024px",
+                        height: "840px",
+                        "max-width": "1024px",
+                        frameborder: "no",
+                        border: "0",
+                        marginwidth: "0",
+                        marginheight: "0",
+                        scrolling: "no",
+                        allowtransparency: "yes"
+                    }));
+            })
         }
 
         private static addReactor(data) {

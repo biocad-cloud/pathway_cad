@@ -22,14 +22,16 @@ namespace PathwayNavigator {
                 return null;
             }
         } else {
+            const childs = $from(kegg_tree.children)
+                .Select(c => parseJsTree(c, showKONode))
+                .Where(d => !isNullOrUndefined(d))
+                .ToArray()
+
             return <jsTree>{
                 id: `${name.id}_${++unique}`,
                 text: commonName,
-                children: $from(kegg_tree.children)
-                    .Select(c => parseJsTree(c, showKONode))
-                    .Where(d => !isNullOrUndefined(d))
-                    .ToArray(),
-                icon: folderIcon
+                children: childs,
+                icon: childs.length == 0 ? objectIcon : folderIcon
             }
         }
     }
