@@ -14,6 +14,10 @@ namespace apps {
         }
 
         protected init(): void {
+            PathwayExplorer.initKEGG(() => this.loadCache());
+        }
+
+        private loadCache() {
             const tree = PathwayNavigator.parseJsTree(PathwayExplorer.loadKEGGTree());
             const components: PathwayNavigator.jsTree[] = [];
 
@@ -53,6 +57,7 @@ namespace apps {
 
             // $ts.value(valueSel, term.id.toString());
             $ts(listDiv).hide();
+            console.log(term);
 
             // this.updateChart(term.id);
         }

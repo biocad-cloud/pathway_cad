@@ -11,23 +11,25 @@ namespace apps {
         readonly canvas: Metabolic_pathway = new Metabolic_pathway();
 
         protected init(): void {
+            PathwayExplorer.initKEGG(() => this.loadCache());
+            this.canvas.init();
+        }
+
+        public static initKEGG(loadCache: Delegate.Action) {
             const dataUrl: string = <any>$ts("@data:repository");
-            const vm = this;
             const assembly: string = localStorage.getItem(assemblyKey);
 
             if (!Strings.Empty(dataUrl, true)) {
                 if (Strings.Empty(assembly)) {
                     // get from server and cached into localstorage
                     $ts.get(dataUrl, function (obj) {
-                        vm.saveCache(<any>obj);
-                        vm.loadCache();
+                        PathwayExplorer.saveCache(<any>obj);
+                        loadCache();
                     })
                 } else {
-                    vm.loadCache()
+                    loadCache()
                 }
             }
-
-            vm.canvas.init();
         }
 
         private loadUITree(obj: KEGG.brite.IKEGGBrite) {
