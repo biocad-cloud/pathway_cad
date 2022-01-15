@@ -79,12 +79,21 @@ namespace apps {
             const mapId: string = `map${id.split("_")[0]}`;
 
             $ts.post(`@url:createmap`, { mapid: mapId }, function (data) {
-                if (data.code == 0) {
-                    $goto(<string>data.info);
+                const url: string = PathwayExplorer.getUrl(data);
+
+                if (data.code == 0 && !Strings.Empty(url, true)) {
+                    $goto(url);
                 } else {
                     // show error message
                 }
             });
+        }
+
+        private static getUrl(data: IMsg<any>) {
+            if (isNullOrUndefined(data)) return null;
+            if (typeof (data.info) != "string") return null;
+
+            return data.info;
         }
 
         public static saveCache(obj: KEGG.brite.IKEGGBrite) {
