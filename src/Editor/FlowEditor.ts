@@ -34,7 +34,8 @@ namespace apps {
                 mouseMoveTools
             },
             addDiagramListener,
-            model,
+            model: Model,
+            layout,
             isModified: boolean,
             startTransaction,
             commitTransaction,

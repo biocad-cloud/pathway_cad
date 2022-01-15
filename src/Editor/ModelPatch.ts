@@ -65,12 +65,15 @@ namespace apps {
             group: string
             key: string
             label: string
+            figure?: "Rectangle" | "Ellipse";
             loc: string
             isGroup: boolean
+            fill?: string;
             /**
              * text label of the node element
             */
             text: string
+            size?: string
         }[]
         linkDataArray: {
             category: "flow" | "influence"
