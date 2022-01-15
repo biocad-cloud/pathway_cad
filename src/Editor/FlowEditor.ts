@@ -158,7 +158,7 @@ namespace apps {
                     // initial value
                     $(go.TextBlock, EditorTemplates.textStyle(10), //{
                         // _isNodeLabel: true, alignment: new go.Spot(0.5, 0.5, 0, 30)                     
-                   // },
+                        // },
                         new go.Binding("text", "label"))
                 ));
 
@@ -301,14 +301,22 @@ namespace apps {
         }
 
         load() {
+            const model_id: string = <any>$ts("@data:model_id");
+            const uri: string = `@api:load?model_id=${model_id}`;
+
+            if ((!Strings.Empty(model_id, true)) && model_id.charAt(0) == "#") {
+                this.loadModelFromJsonText($ts.text(model_id));
+            } else {
+                $ts.getText(uri, json => this.loadModelFromJsonText(json));
+            }
+        }
+
+        private loadModelFromJsonText(json: string) {
+            const model: Model = ModelPatch(JSON.parse(json));
+            const jsonStr: string = JSON.stringify(model)
             const vm = this;
 
-            $ts.getText(`@api:load?model_id=${$ts("@data:model_id")}`, function (json: string) {
-                const model: Model = ModelPatch(JSON.parse(json));
-                const jsonStr: string = JSON.stringify(model)
-
-                vm.goCanvas.model = go.Model.fromJson(jsonStr);
-            });
+            vm.goCanvas.model = go.Model.fromJson(jsonStr);
         }
 
         private dosave(callback: any = null) {
