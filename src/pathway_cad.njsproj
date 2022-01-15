@@ -48,6 +48,9 @@
     <TypeScriptCompile Include="Canvas\Translation.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="Canvas\Viewer.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="Editor\FlowEditor.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
