@@ -9,8 +9,10 @@ namespace Editor.layouts {
             const vm = this;
 
             myDiagram.startTransaction("generateCircle");
+            myDiagram.startTransaction("change Layout");
             // force a diagram layout
             vm.layout();
+            myDiagram.commitTransaction("change Layout");
             myDiagram.commitTransaction("generateCircle");
         }
 
@@ -19,52 +21,74 @@ namespace Editor.layouts {
         */
         layout() {
             const myDiagram = this.editor.goCanvas;
+            const lay = myDiagram.layout;
 
-            myDiagram.startTransaction("change Layout");
+            lay.radius = circle.radiusValue("NaN");
+            lay.aspectRatio = 1;
+            lay.startAngle = 0;
+            lay.sweepAngle = 360;
+            lay.spacing = 6;
+            lay.arrangement = circle.mapArrangement(this.getArrangementValue());
+            lay.nodeDiameterFormula = circle.mapDiamFormula(this.getRadioValue());
+            lay.direction = circle.mapDirection(this.getDirectionValue());
+            lay.sorting = circle.mapSorting(this.getSortValue());
 
-            var lay = myDiagram.layout;
+            console.log(lay);
+        }
 
-            var radius: string | number = "NaN"
-            if (radius !== "NaN") radius = parseFloat(radius, 10);
-            else radius = NaN;
-            lay.radius = radius;
+        public static radiusValue(radius) {
+            if (radius !== "NaN") {
+                return parseFloat(radius, 10);
+            } else {
+                return NaN
+            };
+        }
 
-            var aspectRatio = 1;
-            lay.aspectRatio = aspectRatio;
+        public static mapSorting(sorting: "Forwards" | "Reverse" | "Ascending" | "Descending" | "Optimized") {
+            switch (sorting) {
+                case "Forwards": return go.CircularLayout.Forwards;
+                case "Reverse": return go.CircularLayout.Reverse;
+                case "Ascending": return go.CircularLayout.Ascending;
+                case "Descending": return go.CircularLayout.Descending;
+                case "Optimized": return go.CircularLayout.Optimized;
 
-            var startAngle = 0;
-            lay.startAngle = startAngle;
+                default:
+                    throw `invalid option: ${sorting}!`;
+            }
+        }
 
-            var sweepAngle = 360
-            lay.sweepAngle = sweepAngle;
+        public static mapDirection(direction: "Clockwise" | "Counterclockwise" | "BidirectionalLeft" | "BidirectionalRight") {
+            switch (direction) {
+                case "Clockwise": return go.CircularLayout.Clockwise;
+                case "Counterclockwise": return go.CircularLayout.Counterclockwise;
+                case "BidirectionalLeft": return go.CircularLayout.BidirectionalLeft;
+                case "BidirectionalRight": return go.CircularLayout.BidirectionalRight;
 
-            var spacing = 6
-            lay.spacing = spacing;
+                default:
+                    throw `invalid option: ${direction}!`;
+            }
+        }
 
-            var arrangement = this.getArrangementValue();
-            if (arrangement === "ConstantDistance") lay.arrangement = go.CircularLayout.ConstantDistance;
-            else if (arrangement === "ConstantAngle") lay.arrangement = go.CircularLayout.ConstantAngle;
-            else if (arrangement === "ConstantSpacing") lay.arrangement = go.CircularLayout.ConstantSpacing;
-            else if (arrangement === "Packed") lay.arrangement = go.CircularLayout.Packed;
+        public static mapDiamFormula(diamFormula: "Pythagorean" | "Circular") {
+            if (diamFormula === "Pythagorean") {
+                return go.CircularLayout.Pythagorean;
+            } else if (diamFormula === "Circular") {
+                return go.CircularLayout.Circular;
+            } else {
+                throw `invalid option value: ${diamFormula}!`;
+            }
+        }
 
-            var diamFormula = this.getRadioValue();
-            if (diamFormula === "Pythagorean") lay.nodeDiameterFormula = go.CircularLayout.Pythagorean;
-            else if (diamFormula === "Circular") lay.nodeDiameterFormula = go.CircularLayout.Circular;
+        public static mapArrangement(arrangement: "ConstantDistance" | "ConstantAngle" | "ConstantSpacing" | "Packed") {
+            switch (arrangement) {
+                case "ConstantDistance": return go.CircularLayout.ConstantDistance;
+                case "ConstantAngle": return go.CircularLayout.ConstantAngle;
+                case "ConstantSpacing": return go.CircularLayout.ConstantSpacing;
+                case "Packed": return go.CircularLayout.Packed;
 
-            var direction = this.getDirectionValue();
-            if (direction === "Clockwise") lay.direction = go.CircularLayout.Clockwise;
-            else if (direction === "Counterclockwise") lay.direction = go.CircularLayout.Counterclockwise;
-            else if (direction === "BidirectionalLeft") lay.direction = go.CircularLayout.BidirectionalLeft;
-            else if (direction === "BidirectionalRight") lay.direction = go.CircularLayout.BidirectionalRight;
-
-            var sorting = this.getSortValue();
-            if (sorting === "Forwards") lay.sorting = go.CircularLayout.Forwards;
-            else if (sorting === "Reverse") lay.sorting = go.CircularLayout.Reverse;
-            else if (sorting === "Ascending") lay.sorting = go.CircularLayout.Ascending;
-            else if (sorting === "Descending") lay.sorting = go.CircularLayout.Descending;
-            else if (sorting === "Optimized") lay.sorting = go.CircularLayout.Optimized;
-
-            myDiagram.commitTransaction("change Layout");
+                default:
+                    throw `invalid option: ${arrangement}!`;
+            }
         }
 
         getSortValue(): "Forwards" | "Reverse" | "Ascending" | "Descending" | "Optimized" {
