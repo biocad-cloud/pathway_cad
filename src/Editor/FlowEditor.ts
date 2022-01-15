@@ -295,6 +295,10 @@ namespace apps {
             myDiagram.commitTransaction("mode changed");
         }
 
+        public autoLayout_click() {
+            new Editor.layouts.circle(this).generateCircle();
+        }
+
         /**
          * Show the diagram's model in JSON format 
          * that the user may edit.
