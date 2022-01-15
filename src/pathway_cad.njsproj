@@ -36,6 +36,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Canvas\" />
+    <Folder Include="Editor\Layout\" />
     <Folder Include="Models\" />
     <Folder Include="Explorer\" />
     <Folder Include="Editor\" />
@@ -52,6 +53,9 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Editor\FlowEditor.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Editor\Layout\Circle.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Editor\Templates.ts">
