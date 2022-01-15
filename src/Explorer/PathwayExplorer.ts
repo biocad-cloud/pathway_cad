@@ -8,11 +8,10 @@ namespace apps {
             return "Pathway_explorer";
         };
 
-        // readonly canvas: Metabolic_pathway = new Metabolic_pathway();
+        private Metabolic_pathway: string = null;
 
         protected init(): void {
             PathwayExplorer.initKEGG(() => this.loadCache());
-            // this.canvas.init();
         }
 
         public static initKEGG(loadCache: Delegate.Action) {
@@ -35,6 +34,7 @@ namespace apps {
         private loadUITree(obj: KEGG.brite.IKEGGBrite) {
             const tree = PathwayNavigator.parseJsTree(obj);
             const target: string = <any>$ts("@app:explorer");
+            const $vm = this;
 
             $(`#${target}`).jstree({
                 'core': {
@@ -44,8 +44,8 @@ namespace apps {
                 'contextmenu': {
                     'items': {
                         "add_reactor": {
-                            label: "Add Reactor",
-                            action: PathwayExplorer.addReactor
+                            label: "Create Reactor",
+                            action: PathwayExplorer.createReactor
                         }
                     }
                 }
@@ -55,13 +55,15 @@ namespace apps {
                 const id: string = $(`#${target}`).jstree(true).get_node($(this)).id;
                 const mapId = `map${id.split("_")[0]}`;
 
+                $vm.Metabolic_pathway = mapId;
+                $ts("#do-createReactor").onclick = function () { PathwayExplorer.createReactor(mapId) }
                 $ts("#canvas")
                     .clear()
                     .display($ts("<iframe>", {
                         src: `@url:readmap/${mapId}`,
-                        width: "1024px",
-                        height: "840px",
-                        "max-width": "1024px",
+                        width: "1600px",
+                        height: "1200px",
+                        "max-width": "1920px",
                         frameborder: "no",
                         border: "0",
                         marginwidth: "0",
@@ -72,16 +74,17 @@ namespace apps {
             })
         }
 
-        private static addReactor(data) {
-            const id: string = data.reference[0].id;
-            const kid = id.match(/K\d{4,}/g)
+        private static createReactor(data: string | object) {
+            const id: string = typeof (data) == "string" ? data : (<any>data).reference[0].id;
+            const mapId: string = `map${id.split("_")[0]}`;
 
-            if (kid.length > 0) {
-                // K00000
-
-            } else {
-                // do nothing?
-            }
+            $ts.post(`@url:createmap`, { mapid: mapId }, function (data) {
+                if (data.code == 0) {
+                    $goto(<string>data.info);
+                } else {
+                    // show error message
+                }
+            });
         }
 
         public static saveCache(obj: KEGG.brite.IKEGGBrite) {
