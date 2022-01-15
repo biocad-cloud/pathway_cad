@@ -16,6 +16,9 @@ namespace apps {
             .replace("~", "_");
     }
 
+    /**
+     * fix of the invalid model property which it may crashed the editor system.
+    */
     export function ModelPatch(model: Model) {
         for (let node of model.nodeDataArray) {
             if (node.isGroup) {
@@ -23,6 +26,9 @@ namespace apps {
             }
             if (Strings.IsPattern(node.key.toString(), intId)) {
                 node.key = `T${node.key}`;
+            }
+            if (isNullOrUndefined(node.group)) {
+                delete node.group;
             }
 
             node.key = makeSafeSymbol(node.key);
@@ -64,7 +70,7 @@ namespace apps {
             /**
              * text label of the node element
             */
-            text: string 
+            text: string
         }[]
         linkDataArray: {
             category: "flow" | "influence"
