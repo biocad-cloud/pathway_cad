@@ -29,7 +29,7 @@ namespace apps {
         /**
          * Declared as global
         */
-        private goCanvas: {
+        public goCanvas: {
             toolManager: {
                 mouseMoveTools
             },
@@ -42,7 +42,10 @@ namespace apps {
             linkTemplateMap,
             groupTemplate,
             allowLink,
-            nodes: { each }
+            nodes: {
+                each,
+                count: number
+            }
         };
 
         private config() {

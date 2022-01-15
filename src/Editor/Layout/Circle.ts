@@ -2,24 +2,28 @@ namespace Editor.layouts {
 
     export class circle {
 
-        public constructor(public myDiagram) {
-        }
+        public constructor(public editor: apps.FlowEditor) { }
 
         generateCircle(numNodes, width, height, minLinks, maxLinks, randSizes, circ, cyclic) {
+            const myDiagram = this.editor.goCanvas;
             const vm = this;
 
-            vm.myDiagram.startTransaction("generateCircle");
+            myDiagram.startTransaction("generateCircle");
+
             // replace the diagram's model's nodeDataArray
             vm.generateNodes(numNodes, width, height, randSizes, circ);
             // replace the diagram's model's linkDataArray
             vm.generateLinks(minLinks, maxLinks, cyclic);
             // force a diagram layout
             vm.layout();
-            vm.myDiagram.commitTransaction("generateCircle");
+
+            myDiagram.commitTransaction("generateCircle");
         }
 
         generateNodes(numNodes, width, height, randSizes, circ) {
-            var nodeArray = [];
+            const nodeArray = [];
+            const myDiagram = this.editor.goCanvas;
+
             for (var i = 0; i < numNodes; i++) {
                 var size;
                 if (randSizes) {
@@ -51,13 +55,15 @@ namespace Editor.layouts {
             }
 
             // set the nodeDataArray to this array of objects
-            this.myDiagram.model.nodeDataArray = nodeArray;
+            myDiagram.model.nodeDataArray = nodeArray;
         }
 
         generateLinks(min, max, cyclic) {
-            if (this.myDiagram.nodes.count < 2) return;
+            const myDiagram = this.editor.goCanvas;
+
+            if (myDiagram.nodes.count < 2) return;
             var linkArray = [];
-            var nit = this.myDiagram.nodes;
+            var nit = myDiagram.nodes;
             var nodes = new go.List(/*go.Node*/);
             nodes.addAll(nit);
             var num = nodes.length;
@@ -86,67 +92,77 @@ namespace Editor.layouts {
                     }
                 }
             }
-            this.myDiagram.model.linkDataArray = linkArray;
+
+            myDiagram.model.linkDataArray = linkArray;
         }
 
         /**
          * Update the layout from the controls, and then perform the layout again
-        */ 
+        */
         layout() {
-            this.myDiagram.startTransaction("change Layout");
-            var lay = this.myDiagram.layout;
+            const myDiagram = this.editor.goCanvas;
 
-            var radius = document.getElementById("radius").value;
+            myDiagram.startTransaction("change Layout");
+
+            var lay = myDiagram.layout;
+
+            var radius = "NaN"
             if (radius !== "NaN") radius = parseFloat(radius, 10);
             else radius = NaN;
             lay.radius = radius;
 
-            var aspectRatio = document.getElementById("aspectRatio").value;
-            aspectRatio = parseFloat(aspectRatio, 10);
+            var aspectRatio = 1;
             lay.aspectRatio = aspectRatio;
 
-            var startAngle = document.getElementById("startAngle").value;
-            startAngle = parseFloat(startAngle, 10);
+            var startAngle = 0;
             lay.startAngle = startAngle;
 
-            var sweepAngle = document.getElementById("sweepAngle").value;
-            sweepAngle = parseFloat(sweepAngle, 10);
+            var sweepAngle = 360
             lay.sweepAngle = sweepAngle;
 
-            var spacing = document.getElementById("spacing").value;
-            spacing = parseFloat(spacing, 10);
+            var spacing = 6
             lay.spacing = spacing;
 
-            var arrangement = document.getElementById("arrangement").value;
+            var arrangement = this.getArrangementValue();
             if (arrangement === "ConstantDistance") lay.arrangement = go.CircularLayout.ConstantDistance;
             else if (arrangement === "ConstantAngle") lay.arrangement = go.CircularLayout.ConstantAngle;
             else if (arrangement === "ConstantSpacing") lay.arrangement = go.CircularLayout.ConstantSpacing;
             else if (arrangement === "Packed") lay.arrangement = go.CircularLayout.Packed;
 
-            var diamFormula = this.getRadioValue("diamFormula");
+            var diamFormula = this.getRadioValue();
             if (diamFormula === "Pythagorean") lay.nodeDiameterFormula = go.CircularLayout.Pythagorean;
             else if (diamFormula === "Circular") lay.nodeDiameterFormula = go.CircularLayout.Circular;
 
-            var direction = document.getElementById("direction").value;
+            var direction = this.getDirectionValue();
             if (direction === "Clockwise") lay.direction = go.CircularLayout.Clockwise;
             else if (direction === "Counterclockwise") lay.direction = go.CircularLayout.Counterclockwise;
             else if (direction === "BidirectionalLeft") lay.direction = go.CircularLayout.BidirectionalLeft;
             else if (direction === "BidirectionalRight") lay.direction = go.CircularLayout.BidirectionalRight;
 
-            var sorting = document.getElementById("sorting").value;
+            var sorting = this.getSortValue();
             if (sorting === "Forwards") lay.sorting = go.CircularLayout.Forwards;
             else if (sorting === "Reverse") lay.sorting = go.CircularLayout.Reverse;
             else if (sorting === "Ascending") lay.sorting = go.CircularLayout.Ascending;
             else if (sorting === "Descending") lay.sorting = go.CircularLayout.Descending;
             else if (sorting === "Optimized") lay.sorting = go.CircularLayout.Optimized;
 
-            this.myDiagram.commitTransaction("change Layout");
+            myDiagram.commitTransaction("change Layout");
         }
 
-        getRadioValue(name) {
-            var radio = document.getElementsByName(name);
-            for (var i = 0; i < radio.length; i++)
-                if (radio[i].checked) return radio[i].value;
+        getSortValue(): "Forwards" | "Reverse" | "Ascending" | "Descending" | "Optimized" {
+            return "Forwards";
+        }
+
+        getDirectionValue(): "Clockwise" | "Counterclockwise" | "BidirectionalLeft" | "BidirectionalRight" {
+            return "Clockwise";
+        }
+
+        getArrangementValue(): "ConstantDistance" | "ConstantAngle" | "ConstantSpacing" | "Packed" {
+            return "ConstantSpacing";
+        }
+
+        getRadioValue(): "Pythagorean" | "Circular" {
+            return "Circular";
         }
     }
 }
